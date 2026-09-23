@@ -157,6 +157,12 @@ label {
 .chat-composer { display: flex; gap: 10px; padding: 12px 16px 16px; background: #fff; border-top: 1px solid #edf0ed; }
 .chat-composer input { flex: 1; border-radius: 8px; }
 .chat-empty { width: 100%; }
+.calendar-panel { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.calendar-list { display: grid; gap: 12px; }
+.calendar-card { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid #ebf0ec; border-radius: 9px; background: #f8faf8; }
+.calendar-card h3 { margin: 0; color: #2d3a34; font-size: 13px; }
+.calendar-card p { margin: 5px 0 0; color: #718078; font-size: 11px; }
+.calendar-card small { display: block; margin-top: 5px; color: #9aa59f; font-size: 10px; }
 .side-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
 .side-title { display: flex; justify-content: space-between; align-items: center; }
 .side-title h2 { font-size: 13px; }

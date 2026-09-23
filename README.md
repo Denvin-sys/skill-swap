@@ -4,7 +4,7 @@ SkillSwap is a polished full-stack MVP for peer-to-peer skill exchanges. It incl
 
 ## Quick start
 
-Requirements: Node.js 18+ and npm.
+Requirements: Node.js 18+, npm, and PostgreSQL 14+.
 
 ```bash
 npm install
@@ -12,6 +12,41 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173). The API runs at [http://localhost:4000](http://localhost:4000).
+
+## PostgreSQL setup
+
+1. Create a database:
+
+```sql
+CREATE DATABASE skillswap;
+```
+
+2. Apply the schema from the project root:
+
+```bash
+psql -U postgres -d skillswap -f server/schema.sql
+```
+
+3. Copy `server/.env.example` to `server/.env` and set your PostgreSQL password and a strong JWT secret:
+
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/skillswap
+JWT_SECRET=your-long-random-secret
+PORT=4000
+```
+
+4. Start the app:
+
+```bash
+npm run dev
+```
+
+When `DATABASE_URL` is present, the API uses PostgreSQL and seeds the demo users and skills the first time the database is empty. Without it, the API uses the in-memory fallback.
+
+Demo login:
+
+- Email: `yuna@skillswap.dev`
+- Password: `skillswap123`
 
 ## Scripts
 
@@ -28,7 +63,7 @@ Open [http://localhost:5173](http://localhost:5173). The API runs at [http://loc
 - `GET|POST /api/requests`
 - `GET|POST /api/sessions`
 
-The server intentionally uses an in-memory repository so it runs without external services or credentials. Data resets when the server restarts. `server/schema.sql` documents the PostgreSQL tables, relationships, enums, indexes, and UUID strategy needed for a production adapter. To add a database adapter later, set `DATABASE_URL` and replace the repository functions in `server/src/data.ts`; no frontend API contracts need to change.
+The server supports both PostgreSQL and an in-memory fallback. PostgreSQL data is stored in the users, skills, exchange_requests, messages, and sessions tables. The frontend API contracts remain unchanged between both modes.
 
 ## Product notes
 

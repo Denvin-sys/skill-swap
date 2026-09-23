@@ -474,16 +474,16 @@ function App() {
         </header>
 
         <div className="page">
-          <section className="hero">
+        {activeNav === 'Overview' && <section className="hero">
             <div>
               <p className="eyebrow">MONDAY, JUNE 10, 2024</p>
               <h1>Good morning, {currentUser.name.split(' ')[0]} <span>?</span></h1>
               <p className="hero-copy">Make today a little more curious. There are <b>{skills.length + 3} new skills</b> waiting to be discovered.</p>
             </div>
             <button className="primary-button" onClick={() => { setActiveNav('Discover'); document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth' }) }}>Find a skill <span>?</span></button>
-          </section>
+          </section>}
 
-          <section className="stats-grid">
+          {activeNav === 'Overview' && <section className="stats-grid">
             <div className="stat-card">
               <div className="stat-icon mint">?</div>
               <div><span>Exchanges completed</span><strong>{currentUser.stats?.exchangesCompleted ?? 24}</strong><small className="positive">? 18% <em>vs last month</em></small></div>
@@ -496,11 +496,11 @@ function App() {
               <div className="stat-icon peach">?</div>
               <div><span>Community impact</span><strong>{currentUser.stats?.communityHours ?? 36}h</strong><small className="neutral">hours shared</small></div>
             </div>
-          </section>
+          </section>}
 
           <div className="content-grid">
             <div className="primary-column">
-              <section className="section-block" id="discover">
+              {(activeNav === 'Overview' || activeNav === 'Discover') && <section className="section-block" id="discover">
                 <div className="section-heading">
                   <div>
                     <h2>Discover skills</h2>
@@ -537,9 +537,9 @@ function App() {
                     </article>
                   ))}
                 </div>
-              </section>
+              </section>}
 
-              <section className="section-block form-panel">
+              {(activeNav === 'Overview' || activeNav === 'Discover') && <section className="section-block form-panel">
                 <div className="section-heading">
                   <div>
                     <h2>Add a skill</h2>
@@ -585,9 +585,9 @@ function App() {
 
                   <button type="submit" className="primary-button">Save skill</button>
                 </form>
-              </section>
+              </section>}
 
-              <section className="section-block requests-panel">
+              {(activeNav === 'Overview' || activeNav === 'My exchanges') && <section className="section-block requests-panel">
                 <div className="section-heading">
                   <div>
                     <h2>My exchange requests</h2>
@@ -628,9 +628,9 @@ function App() {
                     })
                   )}
                 </div>
-              </section>
+              </section>}
 
-              <section className="section-block messages-panel">
+              {(activeNav === 'Overview' || activeNav === 'Messages') && <section className="section-block messages-panel">
                 <div className="section-heading">
                   <div>
                     <h2>Messages</h2>
@@ -698,10 +698,36 @@ function App() {
                     </div>
                   )}
                 </div>
-              </section>
+              </section>}
+
+              {activeNav === 'Calendar' && <section className="section-block calendar-panel">
+                <div className="section-heading">
+                  <div>
+                    <h2>Calendar</h2>
+                    <p>Keep your upcoming learning sessions organized.</p>
+                  </div>
+                  <button className="primary-button" onClick={() => setToast('Choose an accepted exchange to book a session')}>Book session</button>
+                </div>
+                <div className="calendar-list">
+                  {sessions.length === 0 ? (
+                    <div className="empty-state">No sessions scheduled yet.</div>
+                  ) : (
+                    sessions.map((session) => (
+                      <article className="calendar-card" key={session.id}>
+                        <span className="session-badge" style={{ background: session.color }}>{session.title[0]}</span>
+                        <div>
+                          <h3>{session.title}</h3>
+                          <p>With {session.with}</p>
+                          <small>{session.date} at {session.time} · {session.mode}</small>
+                        </div>
+                      </article>
+                    ))
+                  )}
+                </div>
+              </section>}
             </div>
 
-            <aside className="right-column">
+            {activeNav === 'Overview' && <aside className="right-column">
               <section className="side-card profile-card">
                 <div className="side-title">
                   <h2>Profile</h2>
@@ -746,7 +772,7 @@ function App() {
               </section>
 
               <section className="side-card prompt-card"><span className="prompt-spark">?</span><h2>What can you teach?</h2><p>Sharing your skills helps the whole community grow.</p><button className="outline-button">Add a skill <span>+</span></button></section>
-            </aside>
+            </aside>}
           </div>
         </div>
       </main>
